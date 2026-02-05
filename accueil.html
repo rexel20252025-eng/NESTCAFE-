@@ -164,17 +164,79 @@
         let currentProduct = null;
 
         const PRODUCT_CONFIG = {
-            1: { productId: 1, nom: "Produits -A", price: 5500, dailyRevenue: 1000, cycleDuration: 15, totalRevenue: 18750, limit: 10, gradient: "linear-gradient(135deg, #8B4513, #A0522D)", image: "https://picsum.photos/300/200?random=1" },
-            2: { productId: 2, nom: "Produits -B", price: 10500, dailyRevenue: 2000, cycleDuration: 15, totalRevenue: 35600, limit: 10, gradient: "linear-gradient(135deg, #CD853F, #DEB887)", image: "https://picsum.photos/300/200?random=2" },
-            3: { productId: 3, nom: "Produits -C", price: 25000, dailyRevenue: 5000, cycleDuration: 15, totalRevenue: 84000, limit: 10, gradient: "linear-gradient(135deg, #D2691E, #F4A460)", image: "https://picsum.photos/300/200?random=3" },
-            4: { productId: 4, nom: "Produits -D", price: 50000, dailyRevenue: 9500, cycleDuration: 15, totalRevenue: 162000, limit: 10, gradient: "linear-gradient(135deg, #8B4513, #CD853F)", image: "https://picsum.photos/300/200?random=4" },
-            5: { productId: 5, nom: "Produits -E", price: 100000, dailyRevenue: 20000, cycleDuration: 15, totalRevenue: 330000, limit: 10, gradient: "linear-gradient(135deg, #A0522D, #DEB887)", image: "https://picsum.photos/300/200?random=5" },
-            6: { productId: 6, nom: "Produits -F", price: 200000, dailyRevenue: 40000, cycleDuration: 15, totalRevenue: 660000, limit: 10, gradient: "linear-gradient(135deg, #8B4513, #F4A460)", image: "https://picsum.photos/300/200?random=6" },
-            7: { productId: 7, nom: "Produits -G", price: 400000, dailyRevenue: 80000, cycleDuration: 15, totalRevenue: 1320000, limit: 10, gradient: "linear-gradient(135deg, #CD853F, #A0522D)", image: "https://picsum.photos/300/200?random=7" },
-            8: { productId: 8, nom: "Produits -H", price: 800000, dailyRevenue: 160000, cycleDuration: 15, totalRevenue: 2640000, limit: 10, gradient: "linear-gradient(135deg, #D2691E, #8B4513)", image: "https://picsum.photos/300/200?random=8" },
-            9: { productId: 9, nom: "Produits -I", price: 1500000, dailyRevenue: 300000, cycleDuration: 15, totalRevenue: 4950000, limit: 10, gradient: "linear-gradient(135deg, #8B4513, #DEB887)", image: "https://picsum.photos/300/200?random=9" },
-            10: { productId: 10, nom: "Produits -J", price: 3000000, dailyRevenue: 600000, cycleDuration: 15, totalRevenue: 9900000, limit: 10, gradient: "linear-gradient(135deg, #A0522D, #F4A460)", image: "https://picsum.photos/300/200?random=10" }
-        };
+    1: {
+        productId: 1,
+        nom: "Produits -A",
+        price: 5500,
+        dailyRevenue: 1050,
+        cycleDuration: 21,
+        totalRevenue: 22050,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #8B4513, #A0522D)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770278526-photoroom-20260205-080142415.png"
+    },
+
+    2: {
+        productId: 2,
+        nom: "Produits -B",
+        price: 10500,
+        dailyRevenue: 2570,
+        cycleDuration: 17,
+        totalRevenue: 43690,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #CD853F, #DEB887)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770278636-photoroom-20260205-080340644.png"
+    },
+
+    3: {
+        productId: 3,
+        nom: "Produits -C",
+        price: 18000,
+        dailyRevenue: 4050,
+        cycleDuration: 17,
+        totalRevenue: 68850,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #D2691E, #F4A460)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770278708-photoroom-20260205-080448748.png"
+    },
+
+    4: {
+        productId: 4,
+        nom: "Produits -D",
+        price: 35000,
+        dailyRevenue: 7090,
+        cycleDuration: 17,
+        totalRevenue: 120530,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #8B4513, #CD853F)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770284928-photoroom-20260205-094822689.png"
+    },
+
+    5: {
+        productId: 5,
+        nom: "Produits -E",
+        price: 100000,
+        dailyRevenue: 25500,
+        cycleDuration: 14,
+        totalRevenue: 357000,
+        limit: 5,
+        gradient: "linear-gradient(135deg, #A0522D, #DEB887)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770285079-photoroom-20260205-095054287.png"
+    },
+
+    6: {
+        productId: 6,
+        nom: "Produits -F",
+        price: 200000,
+        dailyRevenue: 48000,
+        cycleDuration: 12,
+        totalRevenue: 577200,
+        limit: 10,
+        gradient: "linear-gradient(135deg, #8B4513, #F4A460)",
+        image: "https://picsum.photos/300/200?random=6"
+    }
+};
+            
 
         function formatCurrency(amount) {
             return `${amount.toLocaleString('fr-FR')} FCFA`;
