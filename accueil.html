@@ -130,8 +130,6 @@
         </div>
     </div>
 
-    <div id="notification" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#10b981; color:white; padding:15px 25px; border-radius:10px; z-index:3000; font-weight:600; box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>
-
     <nav class="bottom-nav">
         <a class="nav-item active" href="accueil.html"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span class="nav-label">Accueil</span></a>
         <a class="nav-item" href="machine.html"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span class="nav-label">Actifs</span></a>
@@ -140,29 +138,40 @@
     </nav>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getDatabase, ref, get, update, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+    // --- Import Firebase ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { 
+        getAuth, 
+        onAuthStateChanged, 
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword 
+    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    import { getDatabase, ref, set, get, onValue, push, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+    import { getStorage } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-storage.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyATz_ogu08DUoKSYKy6t2cHWdleUD-Fbrk",
-            authDomain: "nescafee-74f59.firebaseapp.com",
-            databaseURL: "https://nescafee-74f59-default-rtdb.firebaseio.com",
-            projectId: "nescafee-74f59",
-            storageBucket: "nescafee-74f59.firebasestorage.app",
-            messagingSenderId: "587673707994",
-            appId: "1:587673707994:web:cb59fbbc4d4b9a4c1a4b69",
-            measurementId: "G-CT58K60GFP"
-        };
+    // --- Configuration Firebase (SCHWEPPES) ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyATz_ogu08DUoKSYKy6t2cHWdleUD-Fbrk",
+        authDomain: "schweppes-15df3.firebaseapp.com",
+        databaseURL: "https://schweppes-15df3-default-rtdb.firebaseio.com",
+        projectId: "schweppes-15df3",
+        storageBucket: "schweppes-15df3.firebasestorage.app",
+        messagingSenderId: "1011077098372",
+        appId: "1:1011077098372:web:64f9ad3a8e93f68c070bd1"
+    };
 
+        // --- Initialisation Firebase ---
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
+        const storage = getStorage(app);
 
+        // --- Variables globales ---
         let currentUser = null;
         let currentSolde = 0;
         let currentProduct = null;
 
+        // --- Configuration des produits ---
         const PRODUCT_CONFIG = {
     1: {
         productId: 1,
@@ -236,20 +245,30 @@
         image: "https://image.noelshack.com/fichiers/2026/06/4/1770286242-photoroom-20260205-101025558.png"
     }
 };
-            
 
-        function formatCurrency(amount) {
-            return `${amount.toLocaleString('fr-FR')} FCFA`;
+        // --- Fonctions utilitaires ---
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('fr-FR').format(value) + " FCFA";
         }
 
-        function showNotification(message, type = "success") {
-            const notif = document.getElementById("notification");
+        function showNotification(message, type = 'success') {
+            const notif = document.createElement('div');
+            notif.style.cssText = `
+                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                background: ${type === 'success' ? 'linear-gradient(135deg, #4CAF50, #45a049)' : 'linear-gradient(135deg, #f44336, #e53935)'};
+                color: white; padding: 15px 25px; border-radius: 12px; z-index: 10000;
+                font-size: 14px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                animation: slideDown 0.3s ease-out;
+            `;
             notif.textContent = message;
-            notif.style.background = type === "error" ? "#ef4444" : "#10b981";
-            notif.style.display = "block";
-            setTimeout(() => notif.style.display = "none", 3000);
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.animation = 'slideUp 0.3s ease-out';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
         }
 
+        // --- Gestion du solde ---
         function setupBalanceListener(uid) {
             const balanceRef = ref(db, `users/${uid}/balance`);
             onValue(balanceRef, snapshot => {
@@ -257,31 +276,28 @@
             });
         }
 
+        // --- Vérification des investissements actifs ---
         async function checkActiveInvestments(uid, productId) {
-            try {
-                const invRef = ref(db, `investments/${uid}`);
-                const snapshot = await get(invRef);
-                if (!snapshot.exists()) return 0;
-                
-                let count = 0;
-                snapshot.forEach(child => {
-                    const inv = child.val();
-                    if (inv.productId === productId && inv.status === "active") count++;
-                });
-                return count;
-            } catch (e) {
-                console.error(e);
-                return 0;
-            }
+            const invRef = ref(db, `investments/${uid}`);
+            const snap = await get(invRef);
+            if (!snap.exists()) return 0;
+            const invs = snap.val();
+            return Object.values(invs).filter(inv => 
+                inv.productId === productId && inv.status === "active"
+            ).length;
         }
 
+        // --- Gestion du modal ---
         function openModal(productId) {
             currentProduct = PRODUCT_CONFIG[productId];
+            if (!currentProduct) return;
+
             document.getElementById("modalVipBadge").textContent = currentProduct.nom;
             document.getElementById("modalAmount").textContent = formatCurrency(currentProduct.price);
             document.getElementById("modalDaily").textContent = formatCurrency(currentProduct.dailyRevenue);
             document.getElementById("modalCycle").textContent = `${currentProduct.cycleDuration} jours`;
             document.getElementById("modalTotal").textContent = formatCurrency(currentProduct.totalRevenue);
+
             document.getElementById("modal").classList.add("active");
         }
 
@@ -292,7 +308,8 @@
 
         async function investProduct(productId) {
             if (!currentUser) {
-                showNotification("Connectez-vous d'abord", "error");
+                showNotification("Veuillez vous connecter", "error");
+                setTimeout(() => location.href = "login.html", 1500);
                 return;
             }
 
