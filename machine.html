@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bureau de Réclamation NESTCAFE</title>
+    <title>Mes Réclamations - NESTCAFE</title>
     <style>
         * {
             margin: 0;
@@ -12,125 +12,115 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #ffffff;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
             min-height: 100vh;
-            padding: 0;
-            margin: 0;
-            padding-bottom: 80px;
+            padding: 20px;
+            padding-bottom: 100px;
         }
 
         .container {
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
+        /* Header épuré */
         .header {
-            display: none;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
         }
 
-        .stats-grid {
+        .header h1 {
+            font-size: 24px;
+            color: #1a1a1a;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Stats minimalistes */
+        .stats-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-item {
             display: flex;
             justify-content: space-between;
-            gap: 0;
-            margin-bottom: 20px;
-            background: white;
-            border-top: 2px solid #8B4513;
-            border-bottom: 2px solid #8B4513;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 0;
-            text-align: center;
-            box-shadow: none;
-            transition: transform 0.3s;
-            flex: 1;
-            border: none;
-            border-right: 1px solid #e5e7eb;
-        }
-
-        .stat-card:last-child {
-            border-right: none;
-        }
-
-        .stat-card:hover {
-            transform: scale(1.02);
-            background: #fafafa;
-        }
-
-        .stat-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
+        .stat-item:last-child {
+            border-bottom: none;
         }
 
         .stat-label {
-            color: #6b7280;
-            font-size: 12px;
-            margin-bottom: 8px;
+            color: #666;
+            font-size: 13px;
             font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .stat-value {
             color: #8B4513;
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 600;
         }
 
+        /* Cards de réclamation épurées */
         #claims-container {
-            background: white;
-            padding: 20px;
-            border-radius: 0;
-            box-shadow: none;
-            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .claim-card {
             background: white;
-            padding: 20px 0;
-            border-radius: 0;
-            margin: 0 0 15px 0;
-            border-top: 1px solid #e5e7eb;
-            border-bottom: 1px solid #e5e7eb;
-            transition: all 0.3s;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
         }
 
         .claim-card:hover {
-            background: #fafafa;
-            border-top: 1px solid #8B4513;
-            border-bottom: 1px solid #8B4513;
+            box-shadow: 0 4px 16px rgba(139, 69, 19, 0.08);
+            transform: translateY(-2px);
         }
 
         .claim-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 0 20px 12px 20px;
-            border-bottom: 1px solid #f3f4f6;
+            gap: 14px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f5f5f5;
         }
 
         .claim-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #8B4513, #D2691E);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .claim-title {
-            font-size: 18px;
-            color: #1f2937;
+            font-size: 16px;
+            color: #1a1a1a;
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .claim-subtitle {
@@ -139,29 +129,39 @@
             font-weight: 500;
         }
 
+        /* Info simplifiée */
         .claim-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            justify-content: space-between;
             gap: 12px;
-            margin-bottom: 15px;
-            padding: 12px 20px;
-            background: #f9fafb;
-            border-radius: 0;
+            margin-bottom: 16px;
         }
 
         .info-item {
-            font-size: 13px;
-            color: #4b5563;
+            flex: 1;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        .info-item strong {
-            color: #1f2937;
+        .info-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #1a1a1a;
             font-weight: 600;
         }
 
+        /* Barre de progression minimaliste */
         .progress-section {
-            margin-bottom: 15px;
-            padding: 0 20px;
+            margin-bottom: 16px;
         }
 
         .progress-header {
@@ -169,36 +169,45 @@
             justify-content: space-between;
             margin-bottom: 8px;
             font-size: 12px;
-            color: #6b7280;
+        }
+
+        .progress-label {
+            color: #666;
             font-weight: 500;
         }
 
+        .progress-value {
+            color: #8B4513;
+            font-weight: 600;
+        }
+
         .progress-bar {
-            height: 10px;
-            background: #f3f4f6;
-            border-radius: 5px;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #8B4513, #D2691E);
-            border-radius: 5px;
+            border-radius: 3px;
             transition: width 0.5s ease;
         }
 
+        /* Bouton moderne */
         .claim-btn {
-            width: calc(100% - 40px);
-            margin: 0 20px;
-            padding: 12px;
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             background: linear-gradient(135deg, #8B4513, #D2691E);
             color: white;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.2);
         }
 
         .claim-btn:hover:not(:disabled) {
@@ -207,11 +216,44 @@
         }
 
         .claim-btn:disabled {
-            opacity: 0.5;
+            background: #e0e0e0;
+            color: #999;
             cursor: not-allowed;
-            background: #9ca3af;
+            box-shadow: none;
         }
 
+        /* Notification élégante */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            display: none;
+            z-index: 1000;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.success {
+            border-left: 4px solid #10b981;
+            color: #10b981;
+        }
+
+        .notification.error {
+            border-left: 4px solid #ef4444;
+            color: #ef4444;
+        }
+
+        /* Bottom navigation d'origine */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -253,77 +295,129 @@
             font-weight: 500;
         }
 
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 15px;
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            color: #1a1a1a;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .empty-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #8B4513, #D2691E);
             color: white;
-            font-weight: 500;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .notification.success {
-            background: linear-gradient(135deg, #10b981, #059669);
+        .empty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
         }
 
-        .notification.error {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #8B4513;
         }
 
-        @media (max-width: 600px) {
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f0f0f0;
+            border-top: 3px solid #8B4513;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                padding-bottom: 100px;
+            }
+
             .header h1 {
-                font-size: 24px;
-            }
-            
-            .claim-info {
-                grid-template-columns: 1fr;
+                font-size: 20px;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .claim-card {
+                padding: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="notification" id="notification"></div>
-
     <div class="container">
         <div class="header">
-            <div class="logo">☕</div>
-            <h1>Bureau de Réclamation NESTCAFE</h1>
-            <p>Réclamez vos revenus quotidiens</p>
+            <h1>☕ Mes Réclamations</h1>
+            <p>Collectez vos revenus quotidiens</p>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
-                </div>
-                <div class="stat-label">Total des produits actifs</div>
-                <div class="stat-value" id="total-claims">0</div>
+                    Investissements actifs
+                </span>
+                <span class="stat-value" id="total-claims">0</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2">
+            <div class="stat-item">
+                <span class="stat-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
                         <line x1="12" y1="1" x2="12" y2="23"></line>
                         <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                     </svg>
-                </div>
-                <div class="stat-label">Bénéfice gagné</div>
-                <div class="stat-value" id="total-revenue">0 FCFA</div>
+                    Total des bénéfices
+                </span>
+                <span class="stat-value" id="total-revenue">0 FCFA</span>
             </div>
         </div>
 
-        <div id="claims-container"></div>
+        <div id="claims-container">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Chargement de vos investissements...</p>
+            </div>
+        </div>
     </div>
+
+    <div class="notification" id="notification"></div>
 
     <nav class="bottom-nav">
         <a class="nav-item" href="accueil.html">
@@ -376,60 +470,60 @@
         let currentUser = null;
 
         const VIP_CONFIG = {
-           1: { 
+            1: { 
                 productId: 1, 
-                nom: "Produits -A", 
-                price: 5500, 
-                dailyRevenue: 1050, 
-                cycleDuration: 21, 
-                totalRevenue: 22050, 
-                limit: 1,
-                image: "https://image.noelshack.com/fichiers/2026/01/7/1767566579-714fmrtnyel-sl1500.jpg",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.3))"
+                nom: "produits -A", 
+                price: 10000, 
+                dailyRevenue: 1200, 
+                cycleDuration: 8, 
+                totalRevenue: 9600, 
+                limit: 5,
+                image: "https://image.noelshack.com/fichiers/2026/02/1/1767563913-cappu-nescafe-removebg-preview.png",
+                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(210, 105, 30, 0.05))"
             },
             2: { 
                 productId: 2, 
-                nom: "Produits -B", 
-                price: 10500, 
-                dailyRevenue: 2570, 
-                cycleDuration: 17, 
-                totalRevenue: 43690, 
-                limit: 1,
-                image: "https://image.noelshack.com/fichiers/2026/01/7/1767566989-1.jpg",
-                gradient: "linear-gradient(135deg, rgba(205, 133, 63, 0.3), rgba(222, 184, 135, 0.3))"
+                nom: "produits -B", 
+                price: 20000, 
+                dailyRevenue: 4200, 
+                cycleDuration: 8, 
+                totalRevenue: 33600, 
+                limit: 4,
+                image: "https://image.noelshack.com/fichiers/2026/02/1/1767564047-nescafe-pot-150-g-removebg-preview.png",
+                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(184, 134, 11, 0.05))"
             },
             3: { 
                 productId: 3, 
-                nom: "Produits -C", 
-                price: 18000, 
-                dailyRevenue: 4050, 
-                cycleDuration: 17, 
-                totalRevenue: 68850, 
-                limit: 1,
-                image: "https://image.noelshack.com/fichiers/2026/01/7/1767567329-chocolat-en-poudre-avec-feves-de-cacao-nestle-324x389.jpg",
-                gradient: "linear-gradient(135deg, rgba(210, 105, 30, 0.3), rgba(255, 140, 0, 0.3))"
+                nom: "produits -C", 
+                price: 50000, 
+                dailyRevenue: 11700, 
+                cycleDuration: 10, 
+                totalRevenue: 117000, 
+                limit: 3,
+                image: "https://image.noelshack.com/fichiers/2026/02/1/1767564210-300x300-removebg-preview.png",
+                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(160, 82, 45, 0.05))"
             },
             4: { 
                 productId: 4, 
-                nom: "Produits -D", 
-                price: 35000, 
-                dailyRevenue: 7090, 
-                cycleDuration: 17, 
-                totalRevenue: 120530, 
-                limit: 1,
-                image: "https://image.noelshack.com/fichiers/2026/01/7/1767567532-chocolat-en-poudre-cacaote-et-malte-tonimalt-324x389.jpg",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(101, 67, 33, 0.3))"
+                nom: "produits -D", 
+                price: 100000, 
+                dailyRevenue: 25400, 
+                cycleDuration: 10, 
+                totalRevenue: 254000, 
+                limit: 3,
+                image: "https://image.noelshack.com/fichiers/2026/02/1/1767567834-cafe-nes-xpres.jpg",
+                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(205, 133, 63, 0.05))"
             },
             5: { 
                 productId: 5, 
-                nom: "Produits -E", 
-                price: 100000, 
-                dailyRevenue: 25500, 
-                cycleDuration: 14, 
-                totalRevenue: 357000, 
-                limit: 3,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767567825-images-2.jpeg",
-                gradient: "linear-gradient(135deg, rgba(160, 82, 45, 0.3), rgba(139, 69, 19, 0.3))"
+                nom: "produits -E", 
+                price: 150000, 
+                dailyRevenue: 38900, 
+                cycleDuration: 11, 
+                totalRevenue: 427900, 
+                limit: 2,
+                image: "https://image.noelshack.com/fichiers/2026/02/1/1767567931-pngwing-com-1.png",
+                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(222, 184, 135, 0.05))"
             },
             6: { 
                 productId: 6, 
@@ -440,16 +534,12 @@
                 totalRevenue: 577200, 
                 limit: 2,
                 image: "https://image.noelshack.com/fichiers/2026/02/1/1767568039-cafe-soluble-viennois-nescafe-324x389.jpg",
-                gradient: "linear-gradient(135deg, rgba(210, 105, 30, 0.3), rgba(184, 134, 11, 0.3))"
+                gradient: "linear-gradient(135deg, rgba(210, 105, 30, 0.05), rgba(184, 134, 11, 0.05))"
             }
         };
 
-        const USD_TO_FCFA = 587;
-
-        function formatDualCurrency(amountFCFA) {
-            return {
-                fcfa: Number(amountFCFA).toLocaleString('fr-FR') + ' FCFA'
-            };
+        function formatCurrency(amount) {
+            return Number(amount).toLocaleString('fr-FR') + ' FCFA';
         }
 
         function showNotification(message, type = 'success') {
@@ -462,9 +552,12 @@
 
         function calculateCycleProgress(investment) {
             const config = VIP_CONFIG[investment.productId];
-            if (!config) return { isComplete: true, progress: 100, remainingDays: 0, calculatedTotal: 0 };
+            if (!config) return { isComplete: true, progress: 100, remainingDays: 0 };
 
-            // Utiliser startDate en priorité, sinon timestamp
+            // ⭐ CORRECTION: Utiliser totalCollected de Firebase directement
+            const totalCollected = investment.totalCollected || 0;
+            
+            // Calculer les jours restants
             let startTimestamp;
             if (investment.startDate) {
                 startTimestamp = new Date(investment.startDate).getTime();
@@ -475,17 +568,15 @@
             const daysInCycle = Math.floor((Date.now() - startTimestamp) / (1000 * 60 * 60 * 24));
             const remainingDays = Math.max(0, config.cycleDuration - daysInCycle);
             
-            // Calculer le total basé sur les jours écoulés et la config actuelle
-            const daysCollected = Math.min(daysInCycle, config.cycleDuration);
-            const expectedCollected = daysCollected * config.dailyRevenue;
-            const progress = Math.min((expectedCollected / config.totalRevenue) * 100, 100);
-            const isComplete = remainingDays === 0 || expectedCollected >= config.totalRevenue;
+            // Calculer la progression basée sur totalCollected de Firebase
+            const progress = Math.min((totalCollected / config.totalRevenue) * 100, 100);
+            const isComplete = totalCollected >= config.totalRevenue || remainingDays === 0;
 
             return { 
                 isComplete, 
                 progress, 
                 remainingDays,
-                calculatedTotal: expectedCollected
+                totalCollected
             };
         }
 
@@ -502,12 +593,13 @@
 
         function updateStats(investments) {
             document.getElementById('total-claims').textContent = investments.length;
+            
+            // ⭐ CORRECTION: Utiliser totalCollected de Firebase pour le total
             const total = investments.reduce((sum, inv) => {
-                const { calculatedTotal } = calculateCycleProgress(inv);
-                return sum + calculatedTotal;
+                return sum + (inv.totalCollected || 0);
             }, 0);
-            const dual = formatDualCurrency(total);
-            document.getElementById('total-revenue').textContent = dual.fcfa;
+            
+            document.getElementById('total-revenue').textContent = formatCurrency(total);
         }
 
         function renderClaims(investments) {
@@ -515,11 +607,11 @@
 
             if (investments.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align:center;padding:60px;">
-                        <div style="font-size:80px;margin-bottom:20px;">☕</div>
-                        <h2 style="color:#8B4513;margin-bottom:10px;">Aucun investissement actif</h2>
-                        <p style="color:#666;margin-bottom:25px;">Commencez à investir pour réclamer vos revenus quotidiens</p>
-                        <a href="invest.html" style="display:inline-block;background:linear-gradient(135deg,#8B4513,#D2691E);color:white;padding:15px 35px;border-radius:25px;text-decoration:none;font-weight:600;">Investir maintenant</a>
+                    <div class="empty-state">
+                        <div class="empty-icon">☕</div>
+                        <h2 class="empty-title">Aucun investissement actif</h2>
+                        <p class="empty-text">Commencez à investir pour réclamer vos revenus quotidiens</p>
+                        <a href="invest.html" class="empty-btn">Investir maintenant</a>
                     </div>
                 `;
                 return;
@@ -529,35 +621,40 @@
                 const config = VIP_CONFIG[inv.productId];
                 if (!config) return '';
 
-                const { isComplete, progress, remainingDays, calculatedTotal } = calculateCycleProgress(inv);
+                const { isComplete, progress, remainingDays, totalCollected } = calculateCycleProgress(inv);
                 const canCollect = !isComplete && isReadyToCollect(inv);
-                const daily = formatDualCurrency(config.dailyRevenue);
-                const totalCollected = formatDualCurrency(calculatedTotal);
-                const totalRevenue = formatDualCurrency(config.totalRevenue);
 
                 return `
-                <div class="claim-card" style="background: ${config.gradient}">
+                <div class="claim-card">
                     <div class="claim-header">
-                        <div class="claim-icon" style="background-image: url('${config.image}'); background-size: cover; background-position: center;">
-                        </div>
+                        <div class="claim-icon" style="background-image: url('${config.image}');"></div>
                         <div>
                             <div class="claim-title">${config.nom}</div>
-                            <div class="claim-subtitle">${daily.fcfa} / jour</div>
+                            <div class="claim-subtitle">${formatCurrency(config.dailyRevenue)} / jour</div>
                         </div>
                     </div>
+                    
                     <div class="claim-info">
-                        <div class="info-item"><strong>📅 Début:</strong> ${new Date(inv.startDate || inv.timestamp).toLocaleDateString('fr-FR')}</div>
-                        <div class="info-item"><strong>⏱️ Restant:</strong> ${remainingDays === 0 ? 'Terminé' : remainingDays + ' jours'}</div>
+                        <div class="info-item">
+                            <div class="info-label">Début</div>
+                            <div class="info-value">${new Date(inv.startDate || inv.timestamp).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Restant</div>
+                            <div class="info-value">${remainingDays === 0 ? 'Terminé' : remainingDays + 'j'}</div>
+                        </div>
                     </div>
+                    
                     <div class="progress-section">
                         <div class="progress-header">
-                            <span><strong>Bénéfice récupéré</strong></span>
-                            <span>${totalCollected.fcfa}</span>
+                            <span class="progress-label">Bénéfice récupéré</span>
+                            <span class="progress-value">${formatCurrency(totalCollected)}</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${progress}%"></div>
                         </div>
                     </div>
+                    
                     <button class="claim-btn" onclick="window.collectRevenue('${inv.id}')" ${(!canCollect || isComplete)?'disabled':''}>
                         ${isComplete ? '✅ Cycle terminé' : (canCollect ? '💰 Réclamer maintenant' : '⏳ Déjà réclamé aujourd\'hui')}
                     </button>
@@ -569,7 +666,12 @@
         async function loadClaims() {
             if (!currentUser) return;
             const container = document.getElementById('claims-container');
-            container.innerHTML = '<div style="text-align:center;padding:40px;color:#8B4513;">☕ Chargement...</div>';
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Chargement de vos investissements...</p>
+                </div>
+            `;
 
             try {
                 const snapshot = await get(ref(db, `investments/${currentUser.uid}`));
@@ -586,13 +688,19 @@
             } catch (error) {
                 console.error("Erreur:", error);
                 showNotification("❌ Erreur de chargement", "error");
-                container.innerHTML = '<div style="text-align:center;padding:40px;color:#ef4444;">❌ Erreur de chargement</div>';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">❌</div>
+                        <h2 class="empty-title">Erreur de chargement</h2>
+                        <p class="empty-text">Impossible de charger vos investissements</p>
+                    </div>
+                `;
             }
         }
 
         window.collectRevenue = async function(investmentId) {
             if (!currentUser) {
-                showNotification('❌ Connectez-vous', 'error');
+                showNotification('❌ Connectez-vous d\'abord', 'error');
                 return;
             }
 
@@ -600,11 +708,13 @@
                 const investmentRef = ref(db, `investments/${currentUser.uid}/${investmentId}`);
                 const userRef = ref(db, `users/${currentUser.uid}`);
                 const [invSnap, userSnap] = await Promise.all([get(investmentRef), get(userRef)]);
+                
                 if (!invSnap.exists()) throw new Error("Investissement introuvable");
 
                 const investment = invSnap.val();
                 const userBalance = parseFloat(userSnap.val()?.balance || 0);
                 const config = VIP_CONFIG[investment.productId];
+                
                 if (!config) throw new Error("Configuration manquante");
                 if (investment.totalCollected >= config.totalRevenue) throw new Error("Cycle terminé");
                 if (!isReadyToCollect(investment)) throw new Error("Déjà collecté aujourd'hui");
@@ -617,12 +727,11 @@
                 };
 
                 await update(ref(db), updates);
-                const collectedDual = formatDualCurrency(config.dailyRevenue);
-                showNotification(`✅ ${collectedDual.fcfa} collectés !`, "success");
+                showNotification(`✅ ${formatCurrency(config.dailyRevenue)} collectés !`, "success");
                 loadClaims();
             } catch (error) {
                 console.error("Erreur:", error);
-                showNotification(error.message || "❌ Erreur", "error");
+                showNotification(error.message || "❌ Erreur lors de la collecte", "error");
             }
         };
 
@@ -633,11 +742,11 @@
                 onValue(ref(db, `investments/${user.uid}`), () => loadClaims());
             } else {
                 document.getElementById('claims-container').innerHTML = `
-                    <div style="text-align:center;padding:60px;">
-                        <div style="font-size:80px;margin-bottom:20px;">🔐</div>
-                        <h2 style="color:#8B4513;margin-bottom:10px;">Connexion requise</h2>
-                        <p style="color:#666;margin-bottom:25px;">Connectez-vous pour accéder à vos réclamations</p>
-                        <a href="index.html" style="display:inline-block;background:linear-gradient(135deg,#8B4513,#D2691E);color:white;padding:15px 35px;border-radius:25px;text-decoration:none;font-weight:600;">Se connecter</a>
+                    <div class="empty-state">
+                        <div class="empty-icon">🔐</div>
+                        <h2 class="empty-title">Connexion requise</h2>
+                        <p class="empty-text">Connectez-vous pour accéder à vos réclamations</p>
+                        <a href="index.html" class="empty-btn">Se connecter</a>
                     </div>
                 `;
                 updateStats([]);
