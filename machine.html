@@ -470,73 +470,79 @@
         let currentUser = null;
 
         const VIP_CONFIG = {
-            1: { 
-                productId: 1, 
-                nom: "produits -A", 
-                price: 10000, 
-                dailyRevenue: 1200, 
-                cycleDuration: 8, 
-                totalRevenue: 9600, 
-                limit: 5,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767563913-cappu-nescafe-removebg-preview.png",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(210, 105, 30, 0.05))"
-            },
-            2: { 
-                productId: 2, 
-                nom: "produits -B", 
-                price: 20000, 
-                dailyRevenue: 4200, 
-                cycleDuration: 8, 
-                totalRevenue: 33600, 
-                limit: 4,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767564047-nescafe-pot-150-g-removebg-preview.png",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(184, 134, 11, 0.05))"
-            },
-            3: { 
-                productId: 3, 
-                nom: "produits -C", 
-                price: 50000, 
-                dailyRevenue: 11700, 
-                cycleDuration: 10, 
-                totalRevenue: 117000, 
-                limit: 3,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767564210-300x300-removebg-preview.png",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(160, 82, 45, 0.05))"
-            },
-            4: { 
-                productId: 4, 
-                nom: "produits -D", 
-                price: 100000, 
-                dailyRevenue: 25400, 
-                cycleDuration: 10, 
-                totalRevenue: 254000, 
-                limit: 3,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767567834-cafe-nes-xpres.jpg",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(205, 133, 63, 0.05))"
-            },
-            5: { 
-                productId: 5, 
-                nom: "produits -E", 
-                price: 150000, 
-                dailyRevenue: 38900, 
-                cycleDuration: 11, 
-                totalRevenue: 427900, 
-                limit: 2,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767567931-pngwing-com-1.png",
-                gradient: "linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(222, 184, 135, 0.05))"
-            },
-            6: { 
-                productId: 6, 
-                nom: "produits -F", 
-                price: 200000, 
-                dailyRevenue: 48100, 
-                cycleDuration: 12, 
-                totalRevenue: 577200, 
-                limit: 2,
-                image: "https://image.noelshack.com/fichiers/2026/02/1/1767568039-cafe-soluble-viennois-nescafe-324x389.jpg",
-                gradient: "linear-gradient(135deg, rgba(210, 105, 30, 0.05), rgba(184, 134, 11, 0.05))"
-            }
-        };
+      1: {
+        productId: 1,
+        nom: "Produits -A",
+        price: 5500,
+        dailyRevenue: 1050,
+        cycleDuration: 21,
+        totalRevenue: 22050,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #8B4513, #A0522D)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770278526-photoroom-20260205-080142415.png"
+    },
+
+    2: {
+        productId: 2,
+        nom: "Produits -B",
+        price: 10500,
+        dailyRevenue: 2570,
+        cycleDuration: 17,
+        totalRevenue: 43690,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #CD853F, #DEB887)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770278636-photoroom-20260205-080340644.png"
+    },
+
+    3: {
+        productId: 3,
+        nom: "Produits -C",
+        price: 18000,
+        dailyRevenue: 4050,
+        cycleDuration: 17,
+        totalRevenue: 68850,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #D2691E, #F4A460)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770278708-photoroom-20260205-080448748.png"
+    },
+
+    4: {
+        productId: 4,
+        nom: "Produits -D",
+        price: 35000,
+        dailyRevenue: 7090,
+        cycleDuration: 17,
+        totalRevenue: 120530,
+        limit: 1,
+        gradient: "linear-gradient(135deg, #8B4513, #CD853F)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770284928-photoroom-20260205-094822689.png"
+    },
+
+    5: {
+        productId: 5,
+        nom: "Produits -E",
+        price: 100000,
+        dailyRevenue: 25500,
+        cycleDuration: 14,
+        totalRevenue: 357000,
+        limit: 5,
+        gradient: "linear-gradient(135deg, #A0522D, #DEB887)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770285079-photoroom-20260205-095054287.png"
+    },
+
+    6: {
+        productId: 6,
+        nom: "Produits -F",
+        price: 200000,
+        dailyRevenue: 48000,
+        cycleDuration: 12,
+        totalRevenue: 577200,
+        limit: 10,
+        gradient: "linear-gradient(135deg, #8B4513, #F4A460)",
+        image: "https://image.noelshack.com/fichiers/2026/06/4/1770286242-photoroom-20260205-101025558.png"
+    }
+};
+
 
         function formatCurrency(amount) {
             return Number(amount).toLocaleString('fr-FR') + ' FCFA';
