@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interface Mobile</title>
+    <title>NESTCAFE - Accueil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
 * {
     margin: 0;
@@ -11,300 +12,497 @@
     box-sizing: border-box;
 }
 
+:root {
+    --coffee-dark: #1a0a00;
+    --coffee-deep: #2d1200;
+    --coffee-rich: #4a1e00;
+    --coffee-warm: #7c3a00;
+    --coffee-gold: #c8860a;
+    --coffee-amber: #e8a020;
+    --coffee-cream: #f5e6c8;
+    --coffee-light: #fdf3e1;
+    --coffee-foam: #fff8ee;
+    --accent-green: #2d7a4a;
+    --accent-green-light: #3d9a5e;
+    --accent-red: #c0392b;
+    --accent-red-light: #e74c3c;
+    --text-dark: #1a0a00;
+    --text-muted: #7a5a3a;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: #f8f9fa;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--coffee-light);
     min-height: 100vh;
-    padding-bottom: 80px;
+    padding-bottom: 90px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Fond texturé café */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 20%, rgba(200,134,10,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(74,30,0,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(245,230,200,0.4) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .content {
     padding: 0;
     max-width: 480px;
     margin: 0 auto;
-}
-
-.palette-card {
-    background: white;
-    padding: 15px 20px;
-    color: #1f2937;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    border-radius: 0 0 20px 20px;
-    border: 1px solid #e5e7eb;
-    position: relative;
-    overflow: hidden;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
     position: relative;
     z-index: 1;
 }
 
+/* ── HEADER CARD ── */
+.palette-card {
+    background: linear-gradient(160deg, var(--coffee-deep) 0%, var(--coffee-rich) 40%, var(--coffee-warm) 100%);
+    padding: 22px 20px 20px;
+    color: var(--coffee-cream);
+    border-radius: 0 0 28px 28px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(26,10,0,0.35);
+}
+
+/* Motif grain café */
+.palette-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Cercles décoratifs */
+.palette-card::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid rgba(200,134,10,0.2);
+    pointer-events: none;
+}
+
+.deco-ring {
+    position: absolute;
+    bottom: -80px;
+    left: -50px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,230,200,0.08);
+    pointer-events: none;
+}
+
+/* ── LOGO NESTCAFE ── */
+.nestcafe-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--coffee-gold), var(--coffee-amber));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(200,134,10,0.4);
+    flex-shrink: 0;
+}
+
+.logo-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--coffee-dark);
+}
+
+.logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--coffee-cream);
+    text-transform: uppercase;
+}
+
+.logo-text span {
+    color: var(--coffee-amber);
+}
+
+.logo-tagline {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,230,200,0.5);
+    font-weight: 500;
+}
+
+/* ── USER INFO ── */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+}
+
 .user-logo {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    width: 46px;
+    height: 46px;
+    background: linear-gradient(135deg, var(--coffee-gold), var(--coffee-amber));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    color: white;
-    border: 2px solid #e0e7ff;
-    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+    color: var(--coffee-dark);
+    border: 2px solid rgba(245,230,200,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    flex-shrink: 0;
 }
 
-.user-details {
-    flex: 1;
-}
+.user-details { flex: 1; }
 
 .user-name {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: rgba(245,230,200,0.7);
+    letter-spacing: 0.2px;
+}
+
+.user-name strong {
+    font-size: 15px;
     font-weight: 700;
-    margin-bottom: 2px;
-    letter-spacing: -0.2px;
-    color: #1f2937;
+    color: var(--coffee-cream);
 }
 
 .user-id {
     font-size: 11px;
-    opacity: 0.6;
+    color: rgba(245,230,200,0.5);
     font-weight: 500;
-    color: #6b7280;
+    letter-spacing: 0.3px;
 }
 
+/* ── BALANCE GRID ── */
 .balance-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 .balance-item {
-    background: white;
-    border-radius: 14px;
-    padding: 12px;
-    border: 1px solid #e5e7eb;
+    background: rgba(245,230,200,0.08);
+    border-radius: 16px;
+    padding: 13px 14px;
+    border: 1px solid rgba(200,134,10,0.25);
+    backdrop-filter: blur(8px);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.balance-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,134,10,0.5), transparent);
 }
 
 .balance-item:hover {
+    background: rgba(245,230,200,0.13);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #d1d5db;
+    border-color: rgba(200,134,10,0.45);
 }
 
 .balance-label {
-    font-size: 10px;
-    opacity: 0.7;
-    margin-bottom: 8px;
+    font-size: 9px;
+    color: rgba(245,230,200,0.55);
+    margin-bottom: 7px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #6b7280;
-    position: relative;
-    z-index: 1;
+    letter-spacing: 1px;
 }
 
 .balance-amount {
-    font-size: 17px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    color: #1f2937;
-    position: relative;
-    z-index: 1;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: var(--coffee-cream);
     display: flex;
     align-items: baseline;
     gap: 4px;
+    font-variant-numeric: tabular-nums;
 }
 
 .balance-count {
     font-size: 9px;
-    opacity: 0.65;
+    color: rgba(245,230,200,0.4);
     margin-top: 4px;
     font-weight: 500;
-    color: #9ca3af;
-    position: relative;
-    z-index: 1;
 }
 
+/* ── ACTION BUTTONS ── */
 .action-buttons {
-    padding: 12px 20px;
+    padding: 16px 20px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .btn-action {
     flex: 1;
-    padding: 13px;
+    padding: 14px;
     border: none;
-    border-radius: 14px;
+    border-radius: 16px;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
+    gap: 8px;
     text-decoration: none;
     color: white;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
 }
+
+.btn-action::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.4s ease;
+}
+
+.btn-action:hover::after { left: 100%; }
 
 .btn-icon {
     width: 18px;
     height: 18px;
     fill: white;
+    flex-shrink: 0;
 }
 
 .btn-recharge {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
+    box-shadow: 0 4px 12px rgba(16,185,129,0.3);
 }
 
 .btn-recharge:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 10px 30px rgba(16,185,129,0.35);
 }
 
 .btn-retrait {
     background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-    color: white;
+    box-shadow: 0 4px 12px rgba(244,63,94,0.3);
 }
 
 .btn-retrait:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(244, 63, 94, 0.35);
+    box-shadow: 0 10px 30px rgba(244,63,94,0.35);
 }
 
+/* ── MENU SECTION TITLE ── */
+.section-label {
+    padding: 4px 20px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ── MENU LIST ── */
 .menu-list {
-    padding: 5px 20px 15px 20px;
+    padding: 0 16px 15px 16px;
 }
 
 .menu-item {
     background: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 14px 16px;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px rgba(26,10,0,0.07);
     text-decoration: none;
+    border: 1px solid rgba(200,134,10,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: var(--coffee-gold);
+    transform: scaleY(0);
+    transition: transform 0.25s ease;
 }
 
 .menu-item:hover {
     transform: translateX(5px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 20px rgba(26,10,0,0.12);
+    background: var(--coffee-foam);
+}
+
+.menu-item:hover::before { transform: scaleY(1); }
+
+.menu-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .menu-icon {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
 }
 
+.menu-item:nth-child(1) .menu-icon-wrap { background: rgba(139,92,246,0.1); }
 .menu-item:nth-child(1) .menu-icon { fill: #8b5cf6; }
-.menu-item:nth-child(1):hover { background: rgba(139, 92, 246, 0.05); }
+.menu-item:nth-child(2) .menu-icon-wrap { background: rgba(236,72,153,0.1); }
 .menu-item:nth-child(2) .menu-icon { fill: #ec4899; }
-.menu-item:nth-child(2):hover { background: rgba(236, 72, 153, 0.05); }
+.menu-item:nth-child(3) .menu-icon-wrap { background: rgba(59,130,246,0.1); }
 .menu-item:nth-child(3) .menu-icon { fill: #3b82f6; }
-.menu-item:nth-child(3):hover { background: rgba(59, 130, 246, 0.05); }
+.menu-item:nth-child(4) .menu-icon-wrap { background: rgba(245,158,11,0.1); }
 .menu-item:nth-child(4) .menu-icon { fill: #f59e0b; }
-.menu-item:nth-child(4):hover { background: rgba(245, 158, 11, 0.05); }
+.menu-item:nth-child(5) .menu-icon-wrap { background: rgba(16,185,129,0.1); }
+.menu-item:nth-child(5) .menu-icon { fill: #10b981; }
+.menu-item:nth-child(6) .menu-icon-wrap { background: rgba(200,134,10,0.12); }
+.menu-item:nth-child(6) .menu-icon { fill: var(--coffee-gold); }
 
 .menu-text {
     flex: 1;
     font-size: 14px;
     font-weight: 600;
-    text-decoration: none;
-    color: #1f2937;
+    color: var(--text-dark);
 }
 
 .menu-arrow {
-    width: 18px;
-    height: 18px;
-    fill: #9ca3af;
-    transition: transform 0.3s ease;
+    width: 16px;
+    height: 16px;
+    fill: #c0a080;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
 }
 
 .menu-item:hover .menu-arrow {
     transform: translateX(4px);
+    fill: var(--coffee-gold);
 }
 
+/* ── DOWNLOAD BUTTON ── */
 .btn-download {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--coffee-rich) 0%, var(--coffee-warm) 100%);
+    color: var(--coffee-cream);
     border: none;
     border-radius: 16px;
-    padding: 18px;
+    padding: 17px;
     width: 100%;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 6px 24px rgba(74,30,0,0.3);
     transition: all 0.3s ease;
     margin-bottom: 10px;
     text-decoration: none;
+    letter-spacing: 0.3px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .btn-download:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 12px 35px rgba(74,30,0,0.4);
+    background: linear-gradient(135deg, var(--coffee-warm) 0%, var(--coffee-gold) 100%);
+    color: white;
 }
 
 .download-icon {
-    width: 22px;
-    height: 22px;
-    fill: white;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
 }
 
+/* ── LOGOUT BUTTON ── */
 .btn-logout {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: white;
-    border: none;
+    background: rgba(192,57,43,0.08);
+    color: var(--accent-red);
+    border: 1.5px solid rgba(192,57,43,0.2);
     border-radius: 16px;
-    padding: 18px;
+    padding: 17px;
     width: 100%;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
     transition: all 0.3s ease;
     margin-top: 10px;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.3px;
 }
 
 .btn-logout:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+    background: var(--accent-red);
+    color: white;
+    border-color: var(--accent-red);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(192,57,43,0.3);
 }
 
 .logout-icon {
-    width: 22px;
-    height: 22px;
-    fill: white;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
 }
 
+/* ── BOTTOM NAV ── */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -345,27 +543,67 @@ body {
     font-weight: 500;
 }
 
-.icon-home { fill: currentColor; }
-.icon-dashboard { fill: currentColor; }
-.icon-share { fill: currentColor; }
+.icon-home,
+.icon-dashboard,
+.icon-share,
 .icon-account { fill: currentColor; }
+
+/* Animations d'entrée */
+@keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.palette-card { animation: fadeSlideDown 0.5s ease both; }
+.action-buttons { animation: fadeSlideUp 0.5s 0.15s ease both; }
+.menu-list { animation: fadeSlideUp 0.5s 0.25s ease both; }
+
+.menu-item:nth-child(1) { animation: fadeSlideUp 0.4s 0.3s ease both; }
+.menu-item:nth-child(2) { animation: fadeSlideUp 0.4s 0.35s ease both; }
+.menu-item:nth-child(3) { animation: fadeSlideUp 0.4s 0.4s ease both; }
+.menu-item:nth-child(4) { animation: fadeSlideUp 0.4s 0.45s ease both; }
+.menu-item:nth-child(5) { animation: fadeSlideUp 0.4s 0.5s ease both; }
+.menu-item:nth-child(6) { animation: fadeSlideUp 0.4s 0.55s ease both; }
+
+/* Scrollbar stylisée */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--coffee-light); }
+::-webkit-scrollbar-thumb { background: var(--coffee-gold); border-radius: 2px; }
     </style>
 </head>
 <body>
     <div class="content">
         <div class="palette-card">
-            <div class="money-bg">
-              
-            </div>
-            
-            <div class="user-info">
-                <div class="user-logo">👤</div>
-                <div class="user-details">
-                    <div class="user-name">Utilisateur :  <span id="user-name">Chargement</span></div>
-                    <div class="user-id">Identifiant NESTCAFE : <span id="user-id">xxxxxxxx</span></div>
+            <div class="deco-ring"></div>
+
+            <!-- Logo NESTCAFE -->
+            <div class="nestcafe-logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M2 21h18v-2H2v2zm2-4h14l-3-8H7l-3 8zm5-8h4V7.5c1.1-.28 2-.96 2-1.75C15 4.22 13.8 3 12 3S9 4.22 9 5.75c0 .79.9 1.47 2 1.75V9z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="logo-text">NEST<span>CAFE</span></div>
+                    <div class="logo-tagline">Plateforme d'investissement</div>
                 </div>
             </div>
 
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="user-logo">☕</div>
+                <div class="user-details">
+                    <div class="user-name">Utilisateur &nbsp;<strong><span id="user-name">Chargement...</span></strong></div>
+                    <div class="user-id">ID : <span id="user-id">xxxxxxxx</span></div>
+                </div>
+            </div>
+
+            <!-- Balance Grid -->
             <div class="balance-grid">
                 <div class="balance-item">
                     <div class="balance-label">Solde principal</div>
@@ -388,6 +626,7 @@ body {
             </div>
         </div>
 
+        <!-- Action Buttons -->
         <div class="action-buttons">
             <a href="recharge.html" class="btn-action btn-recharge">
                 <svg class="btn-icon" viewBox="0 0 24 24">
@@ -403,11 +642,15 @@ body {
             </a>
         </div>
 
+        <div class="section-label">Services</div>
+
         <div class="menu-list">
             <a href="historique.html" class="menu-item">
-                <svg class="menu-icon" viewBox="0 0 24 24">
-                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                </svg>
+                <div class="menu-icon-wrap">
+                    <svg class="menu-icon" viewBox="0 0 24 24">
+                        <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                    </svg>
+                </div>
                 <span class="menu-text">Historique de recharge</span>
                 <svg class="menu-arrow" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -415,9 +658,11 @@ body {
             </a>
 
             <a href="historique-retrait.html" class="menu-item">
-                <svg class="menu-icon" viewBox="0 0 24 24">
-                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                </svg>
+                <div class="menu-icon-wrap">
+                    <svg class="menu-icon" viewBox="0 0 24 24">
+                        <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                    </svg>
+                </div>
                 <span class="menu-text">Historique de retrait</span>
                 <svg class="menu-arrow" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -425,9 +670,11 @@ body {
             </a>
 
             <a href="service-client.html" class="menu-item">
-                <svg class="menu-icon" viewBox="0 0 24 24">
-                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/>
-                </svg>
+                <div class="menu-icon-wrap">
+                    <svg class="menu-icon" viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/>
+                    </svg>
+                </div>
                 <span class="menu-text">Service client</span>
                 <svg class="menu-arrow" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -435,9 +682,11 @@ body {
             </a>
 
             <a href="roue-fortune.html" class="menu-item">
-                <svg class="menu-icon" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
-                </svg>
+                <div class="menu-icon-wrap">
+                    <svg class="menu-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
+                    </svg>
+                </div>
                 <span class="menu-text">Roue de la fortune</span>
                 <svg class="menu-arrow" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -445,9 +694,11 @@ body {
             </a>
 
             <a href="portefeuille.html" class="menu-item">
-                <svg class="menu-icon" viewBox="0 0 24 24">
-                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
-                </svg>
+                <div class="menu-icon-wrap">
+                    <svg class="menu-icon" viewBox="0 0 24 24">
+                        <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                    </svg>
+                </div>
                 <span class="menu-text">Compte de retrait</span>
                 <svg class="menu-arrow" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -455,9 +706,11 @@ body {
             </a>
 
             <a href="carte.html" class="menu-item">
-                <svg class="menu-icon" viewBox="0 0 24 24">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-                </svg>
+                <div class="menu-icon-wrap">
+                    <svg class="menu-icon" viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                    </svg>
+                </div>
                 <span class="menu-text">Veuillez vérifier votre compte lié</span>
                 <svg class="menu-arrow" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -480,6 +733,7 @@ body {
         </div>
     </div>
 
+    <!-- Bottom Navigation (transparent) -->
     <nav class="bottom-nav">
         <a class="nav-item active" data-page="accueil" href="accueil.html">
             <svg class="nav-icon icon-home" viewBox="0 0 24 24">
