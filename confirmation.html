@@ -17,7 +17,6 @@
             min-height: 100vh;
             padding: 0;
             margin: 0;
-            overflow-x: hidden;
         }
 
         .container {
@@ -26,7 +25,6 @@
             width: 100%;
             min-height: 100vh;
             animation: slideUp 0.6s ease-out;
-            overflow-x: hidden;
         }
 
         @keyframes slideUp {
@@ -110,7 +108,6 @@
 
         .content {
             padding: 40px 30px;
-            overflow-x: hidden;
             max-width: 100%;
         }
 
@@ -152,6 +149,8 @@
             color: #333;
             font-weight: 600;
             text-align: right;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .payment-number {
@@ -178,7 +177,8 @@
             font-size: 20px;
             font-weight: bold;
             letter-spacing: 1px;
-            word-break: break-all;
+            word-break: break-word;
+            overflow-wrap: break-word;
             max-width: 70%;
         }
 
@@ -398,16 +398,6 @@
 
             <form id="confirmationForm">
                 <div class="form-group">
-                    <label for="userPaymentNumber">Votre numéro de paiement</label>
-                    <input 
-                        type="tel" 
-                        id="userPaymentNumber" 
-                        placeholder="Ex: +229 XX XX XX XX" 
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
                     <label for="transactionId">ID de transaction</label>
                     <input 
                         type="text" 
@@ -525,14 +515,12 @@
             showLoading();
 
             try {
-                const userPaymentNumber = document.getElementById('userPaymentNumber')?.value || '';
                 const transactionId = document.getElementById('transactionId')?.value || '';
                 const rechargeData = JSON.parse(sessionStorage.getItem('rechargeData')) || {};
 
                 // Préparer l'objet transaction
                 const transactionData = {
                     ...rechargeData,
-                    userPaymentNumber,
                     transactionId,
                     status: 'pending',
                     date: new Date().toISOString(),
