@@ -1,110 +1,551 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance - La Roue de la Fortune</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            overflow: hidden;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 60px 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 600px;
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            animation: spin 3s linear infinite;
-        }
-        
-        @keyframes spin {
-            0%, 100% {
-                transform: rotate(0deg);
-            }
-            50% {
-                transform: rotate(180deg);
-            }
-        }
-        
-        h1 {
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .subtitle {
-            font-size: 18px;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: rotate 1s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #999;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roue de la Fortune Nestcafé</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cinzel:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C8960C; --gold-light: #F5C842; --gold-dark: #8B6508;
+    --red: #C0392B; --bg: #ffffff;
+  }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  body { background: var(--bg); min-height: 100vh; font-family: 'Poppins', sans-serif; position: relative; overflow-y: scroll; }
+
+  .bg-pattern { position: fixed; inset: 0; z-index: 0; pointer-events: none; user-select: none; overflow: hidden; }
+  .bg-pattern span { position: absolute; font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: rgba(200,150,12,0.09); white-space: nowrap; letter-spacing: 0.18em; transform: rotate(-22deg); }
+
+  /* ===== LOADING SCREEN ===== */
+  .loading-screen {
+    position: fixed; inset: 0; background: #fff; z-index: 600;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .loading-spinner {
+    width: 48px; height: 48px; border: 4px solid rgba(200,150,12,0.2);
+    border-top-color: var(--gold); border-radius: 50%;
+    animation: spin-load 0.8s linear infinite;
+  }
+  @keyframes spin-load { to { transform: rotate(360deg); } }
+  .loading-screen p { font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.9rem; letter-spacing: 0.1em; }
+
+  /* ===== AUTH OVERLAY ===== */
+  .auth-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500;
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+  }
+  .auth-box {
+    background: #fff; border-radius: 20px; padding: 2.5rem 2rem;
+    width: min(420px, 100%); box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 2px solid rgba(200,150,12,0.3);
+  }
+  .auth-box h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--gold); text-align: center; margin-bottom: 0.3rem; }
+  .auth-box p { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 1.5rem; }
+  .auth-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .auth-tab {
+    flex: 1; padding: 0.6rem; border: 2px solid rgba(200,150,12,0.3); background: transparent;
+    border-radius: 10px; font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700;
+    color: var(--gold-dark); cursor: pointer; transition: all 0.2s;
+  }
+  .auth-tab.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+  .auth-field { margin-bottom: 1rem; }
+  .auth-field label { display: block; font-size: 0.82rem; font-weight: 600; color: #555; margin-bottom: 0.3rem; }
+  .auth-field input {
+    width: 100%; padding: 0.75rem 1rem; border: 1.5px solid #ddd; border-radius: 10px;
+    font-family: 'Poppins', sans-serif; font-size: 0.9rem; outline: none; transition: border 0.2s;
+  }
+  .auth-field input:focus { border-color: var(--gold); }
+  .auth-submit {
+    width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--red), #e74c3c);
+    color: #fff; border: none; border-radius: 50px; font-family: 'Cinzel', serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 18px rgba(192,57,43,0.4);
+  }
+  .auth-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(192,57,43,0.5); }
+  .auth-error { color: var(--red); font-size: 0.82rem; text-align: center; margin-top: 0.7rem; min-height: 1.2rem; }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem; background: rgba(255,255,255,0.95);
+    border-bottom: 2px solid rgba(200,150,12,0.2); backdrop-filter: blur(8px);
+  }
+  .topbar-user { font-size: 0.85rem; color: #555; }
+  .topbar-user strong { color: var(--gold-dark); }
+  .topbar-balance {
+    font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold);
+    background: rgba(200,150,12,0.1); padding: 0.4rem 1rem; border-radius: 50px;
+    border: 1.5px solid rgba(200,150,12,0.3);
+  }
+  .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+  .topbar-turns {
+    font-size: 0.8rem; font-weight: 700; color: var(--red);
+    background: rgba(192,57,43,0.08); padding: 0.35rem 0.8rem; border-radius: 50px;
+    border: 1.5px solid rgba(192,57,43,0.2);
+  }
+  .logout-btn {
+    background: none; border: 1.5px solid #ddd; border-radius: 50%;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: #aaa; cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+  }
+  .logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+  /* ===== PAGE ===== */
+  .page { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; padding: 2.2rem 1rem 3.5rem; }
+
+  .header { text-align: center; margin-bottom: 2rem; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem,5vw,2.9rem); font-weight: 900; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; text-shadow: 0 2px 8px rgba(200,150,12,0.2); }
+  .header .subtitle { margin-top: 0.4rem; font-family: 'Cinzel', serif; font-size: clamp(0.9rem,2.3vw,1.15rem); font-weight: 700; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+  .header .subtitle::before, .header .subtitle::after { content: ''; display: inline-block; width: 36px; height: 2px; background: var(--red); border-radius: 2px; }
+
+  .scene { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+  .pointer { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: 10; width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 34px solid var(--red); filter: drop-shadow(0 2px 6px rgba(192,57,43,0.6)); }
+
+  .wheel-wrapper { position: relative; width: 340px; height: 340px; }
+  .wheel-wrapper::before { content: ''; position: absolute; inset: -12px; border-radius: 50%; background: conic-gradient(var(--gold-light), var(--gold-dark), #fff3c0, var(--gold-light), var(--gold-dark), #fff3c0, var(--gold-light)); animation: spin-ring 8s linear infinite; z-index: 0; }
+  .wheel-wrapper::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; background: #fff; z-index: 1; }
+  @keyframes spin-ring { to { transform: rotate(360deg); } }
+  canvas { position: relative; z-index: 2; border-radius: 50%; display: block; }
+  .hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 10; width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff8dc, var(--gold-dark)); border: 3px solid #fff8dc; box-shadow: 0 0 16px rgba(200,150,12,0.7), inset 0 2px 4px rgba(255,255,255,0.5); cursor: pointer; transition: transform 0.15s; }
+  .hub:hover { transform: translate(-50%,-50%) scale(1.08); }
+
+  .btn { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.14em; color: #fff; background: linear-gradient(135deg, var(--red), #e74c3c, var(--red)); background-size: 200%; animation: btn-shimmer 3s ease infinite; border: none; padding: 0.85rem 2.8rem; border-radius: 50px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 18px rgba(192,57,43,0.4), 0 0 0 2px rgba(200,150,12,0.3); transition: transform 0.15s, box-shadow 0.15s; }
+  .btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 28px rgba(192,57,43,0.6), 0 0 0 3px rgba(200,150,12,0.5); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; animation: none; }
+  @keyframes btn-shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+  .no-turns-msg { font-family: 'Cinzel', serif; font-size: 0.9rem; color: #888; text-align: center; padding: 0.6rem 1.2rem; background: rgba(0,0,0,0.04); border-radius: 50px; border: 1.5px dashed #ddd; }
+
+  .result { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem,2.8vw,1.6rem); font-weight: 700; color: var(--red); min-height: 2.2rem; text-align: center; opacity: 0; transform: translateY(10px); transition: opacity 0.4s, transform 0.4s; }
+  .result.show { opacity: 1; transform: translateY(0); }
+
+  .divider { width: min(88%,580px); height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 2.5rem auto; }
+
+  .rules-section { width: min(92%,620px); background: #fffdf5; border: 1.5px solid rgba(200,150,12,0.28); border-radius: 18px; padding: 1.8rem; box-shadow: 0 4px 24px rgba(200,150,12,0.07), 0 1px 4px rgba(0,0,0,0.05); }
+  .rules-title { font-family: 'Cinzel', serif; font-size: clamp(0.8rem,1.9vw,1rem); font-weight: 700; color: var(--gold-dark); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; margin-bottom: 1.4rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(200,150,12,0.2); }
+  .rule-item { display: flex; gap: 1rem; margin-bottom: 1.3rem; align-items: flex-start; }
+  .rule-item:last-of-type { margin-bottom: 0; }
+  .rule-num { flex-shrink: 0; width: 30px; height: 30px; background: var(--gold); color: #fff; font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.8rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(200,150,12,0.35); margin-top: 2px; }
+  .rule-text { font-size: clamp(0.82rem,1.7vw,0.94rem); color: #2d2d2d; line-height: 1.78; }
+  .rule-text strong { color: var(--red); font-weight: 700; }
+  .rules-note { margin-top: 1.3rem; padding: 0.8rem 1rem; background: rgba(192,57,43,0.06); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; font-size: clamp(0.82rem,1.6vw,0.9rem); color: var(--red); font-weight: 600; line-height: 1.6; }
+
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 200; }
+  .confetti-piece { position: absolute; top: -10px; animation: confetti-fall linear forwards; }
+  @keyframes confetti-fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+  /* ===== WIN TOAST ===== */
+  .win-toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #1a3a1a, #2d6a2d);
+    color: #fff; border-radius: 16px; padding: 1rem 2rem;
+    font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3); z-index: 300;
+    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    text-align: center; white-space: nowrap;
+  }
+  .win-toast.show { transform: translateX(-50%) translateY(0); }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">🎡</div>
-        <h1>La Roue de la Fortune</h1>
-        <p class="subtitle">est en cours de maintenance</p>
-        <div class="spinner"></div>
-        <p class="footer">Elle sera bientôt disponible !</p>
+
+<div class="bg-pattern" id="bgPattern"></div>
+
+<!-- LOADING SCREEN -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-spinner"></div>
+  <p>Chargement…</p>
+</div>
+
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="authOverlay" style="display:none">
+  <div class="auth-box">
+    <h2>✦ Nestcafé ✦</h2>
+    <p>Connectez-vous pour accéder à la Roue de la Fortune</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Connexion</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Inscription</button>
     </div>
+    <div id="loginForm">
+      <div class="auth-field"><label>Email</label><input type="email" id="loginEmail" placeholder="votre@email.com"></div>
+      <div class="auth-field"><label>Mot de passe</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+      <button class="auth-submit" onclick="doLogin()">Se connecter</button>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="auth-field"><label>Prénom / Pseudo</label><input type="text" id="regName" placeholder="Votre prénom"></div>
+      <div class="auth-field"><label>Numéro de téléphone</label><input type="tel" id="regPhone" placeholder="+XXX XX XX XX XX"></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="regEmail" placeholder="votre@email.com"></div>
+      <div class="auth-field"><label>Mot de passe</label><input type="password" id="regPass" placeholder="Minimum 6 caractères"></div>
+      <button class="auth-submit" onclick="doRegister()">S'inscrire</button>
+    </div>
+    <div class="auth-error" id="authError"></div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar" id="topbar" style="display:none">
+  <div class="topbar-balance" id="topbarBalance">0 F</div>
+  <div class="topbar-right">
+    <div class="topbar-turns" id="topbarTurns">0 tour(s)</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="header">
+    <h1>✦ Roue de la Fortune ✦</h1>
+    <div class="subtitle">Roue de la Fortune Nestcafé</div>
+  </div>
+
+  <div class="scene">
+    <div class="pointer"></div>
+    <div class="wheel-wrapper">
+      <canvas id="wheel"></canvas>
+      <div class="hub" id="hubBtn"></div>
+    </div>
+    <button class="btn" id="spinBtn" disabled>Tourner !</button>
+    <div id="noTurnsMsg" class="no-turns-msg" style="display:none">
+      🎫 Aucun tour disponible — Contactez le service client
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="rules-section">
+    <div class="rules-title">Comment fonctionne la Roue de la Fortune Nestcafé ?</div>
+    <div class="rule-item">
+      <div class="rule-num">1</div>
+      <div class="rule-text">
+        <strong>Nouveau sur Nestcafé ?</strong> Toute nouvelle inscription vous donne droit à <strong>1 tour gratuit</strong> de la Roue de la Fortune pour tenter votre chance !
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-num">2</div>
+      <div class="rule-text">
+        Après votre <strong>premier rechargement</strong>, veuillez écrire au service client pour recevoir votre tour.
+        Vous avez droit à <strong>2 tours</strong> de la Roue de la Fortune Nestcafé, et c'est <strong>obligatoire</strong>.
+        Si vous gagnez une grande somme, <strong>l'intérêt sera prélevé par vous-même.</strong>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-num">3</div>
+      <div class="rule-text">
+        Si vous <strong>parrainez des personnes</strong> qui effectuent un rechargement grâce à votre lien de parrainage,
+        veuillez écrire au service client pour recevoir votre tour.
+        Vous avez également <strong>2 tours</strong> de la Roue de la Fortune Nestcafé, et c'est <strong>obligatoire</strong>.
+        Si vous gagnez une grande somme, <strong>l'intérêt sera prélevé par vous-même.</strong>
+      </div>
+    </div>
+    <div class="rules-note">
+      ✔ J'espère que c'est bien noté. Bonne chance à tous !
+    </div>
+  </div>
+</div>
+
+<div class="confetti-container" id="confettiContainer"></div>
+<div class="win-toast" id="winToast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getDatabase, ref, set, get, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyATz_ogu08DUoKSYKy6t2cHWdleUD-Fbrk",
+  authDomain: "schweppes-15df3.firebaseapp.com",
+  databaseURL: "https://schweppes-15df3-default-rtdb.firebaseio.com",
+  projectId: "schweppes-15df3",
+  storageBucket: "schweppes-15df3.firebasestorage.app",
+  messagingSenderId: "1011077098372",
+  appId: "1:1011077098372:web:64f9ad3a8e93f68c070bd1"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getDatabase(app);
+
+let currentUser = null;
+let userData    = {};
+
+// ===== AUTH UI =====
+window.switchTab = function(tab) {
+  document.getElementById('loginForm').style.display    = tab === 'login' ? '' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? '' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('authError').textContent = '';
+};
+
+window.doLogin = async function() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    document.getElementById('authError').textContent = 'Email ou mot de passe incorrect.';
+  }
+};
+
+window.doRegister = async function() {
+  const name  = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass  = document.getElementById('regPass').value;
+  if (!name || !email || !pass) { document.getElementById('authError').textContent = 'Veuillez remplir tous les champs.'; return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    const uid  = cred.user.uid;
+    // Create user profile + 1 free spin
+    await set(ref(db, 'users/' + uid), {
+      name, phoneNumber: phone, email,
+      balance: 0,
+      turns: 1,
+      registeredAt: serverTimestamp(),
+      freeSpinUsed: false
+    });
+  } catch(e) {
+    document.getElementById('authError').textContent = e.message || 'Erreur lors de l\'inscription.';
+  }
+};
+
+window.doLogout = async function() {
+  await signOut(auth);
+};
+
+// ===== AUTH STATE =====
+onAuthStateChanged(auth, async (user) => {
+  // Always hide loading screen first
+  document.getElementById('loadingScreen').style.display = 'none';
+
+  if (user) {
+    currentUser = user;
+    await loadUserData(user.uid);
+    document.getElementById('authOverlay').style.display = 'none';
+    document.getElementById('topbar').style.display = 'flex';
+    updateUI();
+    refreshSpinButton();
+  } else {
+    currentUser = null;
+    userData    = {};
+    document.getElementById('authOverlay').style.display = 'flex';
+    document.getElementById('topbar').style.display = 'none';
+  }
+});
+
+async function loadUserData(uid) {
+  const snap = await get(ref(db, 'users/' + uid));
+  if (snap.exists()) userData = snap.val();
+}
+
+function updateUI() {
+  
+  document.getElementById('topbarBalance').textContent = (userData.balance || 0).toLocaleString('fr-FR') + ' F';
+  document.getElementById('topbarTurns').textContent   = (userData.turns || 0) + ' tour(s)';
+}
+
+function refreshSpinButton() {
+  const turns = userData.turns || 0;
+  const btn    = document.getElementById('spinBtn');
+  const noMsg  = document.getElementById('noTurnsMsg');
+  if (turns > 0) {
+    btn.style.display  = 'inline-block';
+    btn.disabled       = false;
+    noMsg.style.display = 'none';
+  } else {
+    btn.style.display  = 'none';
+    noMsg.style.display = 'block';
+  }
+}
+
+// ===== WHEEL =====
+const prizes = [
+  { label: '+500 F',     value: 500,    color: '#1a3a8e', text: '#FFD700' },
+  { label: '+100 F',     value: 100,    color: '#8e1a1a', text: '#FFD700' },
+  { label: '+50 F',      value: 50,     color: '#1a6e3a', text: '#FFD700' },
+  { label: '+1.000 F',   value: 1000,   color: '#7a4a10', text: '#FFD700' },
+  { label: '+350.000 F', value: 350000, color: '#4a0a8e', text: '#FFD700' },
+  { label: '+400.000 F', value: 400000, color: '#0a4a8e', text: '#FFD700' },
+];
+
+const canvas   = document.getElementById('wheel');
+const ctx      = canvas.getContext('2d');
+const spinBtn  = document.getElementById('spinBtn');
+const hubBtn   = document.getElementById('hubBtn');
+const resultEl = document.getElementById('result');
+const CSS_SIZE = 340;
+const DPR = window.devicePixelRatio || 1;
+canvas.style.width  = CSS_SIZE + 'px';
+canvas.style.height = CSS_SIZE + 'px';
+canvas.width  = CSS_SIZE * DPR;
+canvas.height = CSS_SIZE * DPR;
+ctx.scale(DPR, DPR);
+const CX = CSS_SIZE / 2;
+const CY = CSS_SIZE / 2;
+const R   = CX - 10;
+const ARC = (2 * Math.PI) / prizes.length;
+let currentAngle = 0;
+let spinning     = false;
+
+function drawStar(x, y, r) {
+  ctx.save(); ctx.translate(x, y); ctx.beginPath();
+  for (let i = 0; i < 5; i++) {
+    const a = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+    if (i === 0) ctx.moveTo(Math.cos(a)*r, Math.sin(a)*r);
+    else         ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+  }
+  ctx.closePath(); ctx.fillStyle = 'rgba(255,215,0,0.18)'; ctx.fill(); ctx.restore();
+}
+
+function drawWheel(angle) {
+  ctx.clearRect(0, 0, CSS_SIZE, CSS_SIZE);
+  for (let i = 0; i < prizes.length; i++) {
+    const start = angle + i * ARC, end = start + ARC, mid = start + ARC / 2;
+    ctx.beginPath(); ctx.moveTo(CX, CY); ctx.arc(CX, CY, R, start, end); ctx.closePath();
+    ctx.fillStyle = prizes[i].color; ctx.fill();
+    const grad = ctx.createRadialGradient(CX, CY, 0, CX, CY, R);
+    grad.addColorStop(0, 'rgba(255,255,255,0.13)'); grad.addColorStop(1, 'rgba(0,0,0,0.17)');
+    ctx.beginPath(); ctx.moveTo(CX, CY); ctx.arc(CX, CY, R, start, end); ctx.closePath();
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(CX, CY); ctx.arc(CX, CY, R, start, end); ctx.closePath();
+    ctx.strokeStyle = 'rgba(255,215,0,0.6)'; ctx.lineWidth = 2; ctx.stroke();
+    const sx = CX + Math.cos(mid) * (R * 0.55), sy = CY + Math.sin(mid) * (R * 0.55);
+    drawStar(sx, sy, 10);
+    ctx.save(); ctx.translate(CX, CY); ctx.rotate(mid); ctx.textAlign = 'right';
+    ctx.shadowBlur = 0; ctx.shadowColor = 'transparent'; ctx.font = 'bold 15px Cinzel, serif';
+    ctx.fillStyle = 'rgba(0,0,0,0.85)'; ctx.fillText(prizes[i].label, R - 12.5, 6.5);
+    ctx.fillStyle = prizes[i].text;    ctx.fillText(prizes[i].label, R - 14, 5);
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(CX, CY, R, 0, 2*Math.PI);
+  ctx.strokeStyle = 'rgba(200,150,12,0.9)'; ctx.lineWidth = 4; ctx.stroke();
+  ctx.beginPath(); ctx.arc(CX, CY, 28, 0, 2*Math.PI);
+  ctx.fillStyle = '#1a0a00'; ctx.fill();
+  ctx.strokeStyle = 'rgba(200,150,12,0.7)'; ctx.lineWidth = 2.5; ctx.stroke();
+}
+
+drawWheel(currentAngle);
+function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+
+async function spin() {
+  if (spinning || !currentUser) return;
+  const turns = userData.turns || 0;
+  if (turns <= 0) return;
+
+  spinning = true;
+  spinBtn.disabled = true;
+  resultEl.classList.remove('show');
+
+  // Lire le prochain montant dans la file d'attente (prizeQueue)
+  const queue = Array.isArray(userData.prizeQueue) ? userData.prizeQueue : [];
+  const nextPrize = queue.length > 0 ? queue[0] : null; // null = aléatoire
+  let targetIdx = -1;
+  if (nextPrize !== null && nextPrize !== undefined) {
+    targetIdx = prizes.findIndex(p => p.value === nextPrize);
+  }
+  if (targetIdx === -1) {
+    targetIdx = Math.floor(Math.random() * prizes.length);
+  }
+
+  // Calculer l'angle pour que la roue tombe exactement sur targetIdx
+  // Le centre de la case targetIdx dans le repère de la roue
+  const targetMidAngle = targetIdx * ARC + ARC / 2;
+  // On veut que cet angle soit sous la flèche (en haut = -PI/2)
+  // currentAngle + targetMidAngle ≡ -PI/2  (mod 2PI)
+  // => rotation à ajouter = -PI/2 - targetMidAngle - currentAngle
+  const baseRot   = (2 * Math.PI) * (6 + Math.floor(Math.random() * 4)); // 6-9 tours complets
+  const targetRot = ((-Math.PI / 2) - targetMidAngle - currentAngle - baseRot);
+  // Normaliser pour que totalRot soit toujours positif
+  const totalRot  = baseRot + (((targetRot % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
+
+  const duration   = 4500 + Math.random() * 1000;
+  const startAngle = currentAngle;
+  const startTime  = performance.now();
+
+  function frame(now) {
+    const t      = Math.min((now - startTime) / duration, 1);
+    currentAngle = startAngle + totalRot * easeOut(t);
+    drawWheel(currentAngle);
+    if (t < 1) { requestAnimationFrame(frame); return; }
+
+    currentAngle = currentAngle % (2 * Math.PI);
+    spinning     = false;
+
+    const prize = prizes[targetIdx];
+
+    resultEl.textContent = '🎉 Félicitations ! Vous gagnez : ' + prize.label + ' !';
+    resultEl.classList.add('show');
+
+    // Save to Firebase — effacer forcedPrize après utilisation
+    const uid      = currentUser.uid;
+    const newBal   = (userData.balance || 0) + prize.value;
+    const newTurns = (userData.turns || 0) - 1;
+
+    // Retirer le premier élément de la file
+    const updatedQueue = Array.isArray(userData.prizeQueue) ? userData.prizeQueue.slice(1) : [];
+    update(ref(db, 'users/' + uid), {
+      balance: newBal,
+      turns: newTurns,
+      prizeQueue: updatedQueue
+    }).then(async () => {
+      const histRef = ref(db, 'spinHistory/' + uid + '/' + Date.now());
+      await set(histRef, {
+        prize: prize.label, value: prize.value, date: serverTimestamp()
+      });
+      userData.balance     = newBal;
+      userData.turns       = newTurns;
+      userData.prizeQueue  = updatedQueue;
+      updateUI();
+      refreshSpinButton();
+      if (!spinBtn.disabled) spinBtn.disabled = false;
+    });
+
+    showWinToast(prize.label);
+    if (prize.value >= 350000) launchConfetti();
+  }
+  requestAnimationFrame(frame);
+}
+
+spinBtn.addEventListener('click', spin);
+hubBtn.addEventListener('click', spin);
+
+function showWinToast(label) {
+  const t = document.getElementById('winToast');
+  t.textContent = '💰 ' + label + ' crédité sur votre balance !';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function launchConfetti() {
+  const c = document.getElementById('confettiContainer');
+  const cl = ['#FFD700','#C0392B','#3498DB','#2ECC71','#F39C12','#9B59B6'];
+  for (let i = 0; i < 90; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const delay = Math.random() * 1.5, dur = 2.5 + Math.random() * 1.5;
+    el.style.cssText = `left:${Math.random()*100}vw;background:${cl[Math.floor(Math.random()*cl.length)]};border-radius:${Math.random()>.5?'50%':'2px'};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${dur}s;animation-delay:${delay}s;`;
+    c.appendChild(el);
+    setTimeout(() => el.remove(), (dur + delay) * 1000 + 200);
+  }
+}
+</script>
+
+<script>
+(function() {
+  const container = document.getElementById('bgPattern');
+  const cols = Math.ceil(window.innerWidth / 155) + 2;
+  const rows = Math.ceil(window.innerHeight / 75) + 4;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const span = document.createElement('span');
+      span.textContent = 'Nestcafé';
+      span.style.left = (c * 155 - 30) + 'px';
+      span.style.top  = (r * 75 - 10) + 'px';
+      container.appendChild(span);
+    }
+  }
+})();
+</script>
 </body>
 </html>
