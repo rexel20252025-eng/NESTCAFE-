@@ -231,22 +231,7 @@
     <p>Veuillez contacter notre service en cas de problème.<br/>Notre équipe est disponible pour vous.</p>
   </div>
 
-  <div class="cards">
 
-    <!-- CARTE 1 : Contact -->
-    <div class="card">
-      <div class="icon r">💳</div>
-      <div>
-        <div class="card-title">Veuillez contacter le service clientèle</div>
-        <div class="card-desc">Bonjour cher responsable nestcafe.</div>
-        <a id="btn1" class="btn-wa" href="#" target="_blank">
-          <svg viewBox="0 0 32 32"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.826.736 5.478 2.022 7.793L0 32l8.394-2.007A15.94 15.94 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm8.08 21.843c-.339.954-1.977 1.826-2.718 1.943-.693.11-1.568.155-2.53-.158-.581-.192-1.327-.447-2.283-.876-4.017-1.786-6.63-5.89-6.83-6.162-.199-.272-1.621-2.155-1.621-4.109 0-1.955 1.023-2.918 1.386-3.315.363-.397.792-.496 1.057-.496.265 0 .53.003.763.013.245.012.574-.093.898.686.34.803 1.154 2.757 1.255 2.956.102.199.17.432.033.696-.136.264-.204.43-.403.662-.198.232-.418.52-.596.696-.199.197-.406.41-.175.804.232.394 1.03 1.7 2.213 2.754 1.52 1.354 2.8 1.773 3.194 1.974.394.198.624.165.854-.1.23-.265.983-1.146 1.246-1.54.264-.396.527-.33.886-.198.36.131 2.286 1.078 2.679 1.274.393.197.655.296.75.462.097.165.097.956-.241 1.909z"/></svg>
-          Contacter sur WhatsApp
-        </a>
-      </div>
-    </div>
-
-  </div>
 
   <!-- SECTION QR CODE -->
   <div class="qr-section">
@@ -258,9 +243,9 @@
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://wa.me/qr/ZCXNY5R3ZA4AH1" alt="QR Code WhatsApp Service Client"/>
       </div>
 
-      <div class="phone-number">📞 0712544348</div>
+      <div class="phone-number" style="display:none;">📞 0712544348</div>
 
-      <a class="btn-wa" href="https://wa.me/qr/ZCXNY5R3ZA4AH1" target="_blank">
+      <a id="btn2" class="btn-wa" href="#" target="_blank">
         <svg viewBox="0 0 32 32"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.826.736 5.478 2.022 7.793L0 32l8.394-2.007A15.94 15.94 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm8.08 21.843c-.339.954-1.977 1.826-2.718 1.943-.693.11-1.568.155-2.53-.158-.581-.192-1.327-.447-2.283-.876-4.017-1.786-6.63-5.89-6.83-6.162-.199-.272-1.621-2.155-1.621-4.109 0-1.955 1.023-2.918 1.386-3.315.363-.397.792-.496 1.057-.496.265 0 .53.003.763.013.245.012.574-.093.898.686.34.803 1.154 2.757 1.255 2.956.102.199.17.432.033.696-.136.264-.204.43-.403.662-.198.232-.418.52-.596.696-.199.197-.406.41-.175.804.232.394 1.03 1.7 2.213 2.754 1.52 1.354 2.8 1.773 3.194 1.974.394.198.624.165.854-.1.23-.265.983-1.146 1.246-1.54.264-.396.527-.33.886-.198.36.131 2.286 1.078 2.679 1.274.393.197.655.296.75.462.097.165.097.956-.241 1.909z"/></svg>
         Ouvrir WhatsApp
       </a>
@@ -270,10 +255,10 @@
   <footer>© 2025 Nescafé — Tous droits réservés</footer>
 
   <script>
-    var numero = "2250797723199";
-    var msg1 = "Bonjour chère responsable nestcafe";
+    var numero = "2250712544348";
+    var msg1 = "Bonjour service clientèle nestcafe";
 
-    document.getElementById("btn1").href = "https://wa.me/" + numero + "?text=" + encodeURIComponent(msg1);
+    document.getElementById("btn2").href = "https://wa.me/" + numero + "?text=" + encodeURIComponent(msg1);
   </script>
 
 </body>
